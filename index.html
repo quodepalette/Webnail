@@ -1,967 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webnail — Mockups for developers</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
-    rel="stylesheet">
-  <link rel="icon" type="image/png"
-    href="https://res.cloudinary.com/dkds78kb3/image/upload/v1783604846/webnail_lsktna.png">
-  <style>
-    :root {
-      --ink-blue: #071B34;
-      --blueprint-bg: #0C2B4E;
-      --grid-line: rgba(133, 196, 255, 0.16);
-      --grid-line-strong: rgba(133, 196, 255, 0.32);
-      --linework: #7FC1FF;
-      --paper: #F3F1E9;
-      --paper-dark: #E7E3D6;
-      --ink: #10141A;
-      --ink-soft: #4B5561;
-      --stamp: #FF6B45;
-      --stamp-dark: #D8502D;
-      --ok: #4FD1A5;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: var(--ink-blue);
-      color: var(--paper);
-      font-family: 'IBM Plex Sans', sans-serif;
-      min-height: 100vh;
-    }
-
-    ::selection {
-      background: var(--stamp);
-      color: var(--paper);
-    }
-
-    /* ---------- layout ---------- */
-    .app {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 28px;
-      border-bottom: 1px solid var(--grid-line-strong);
-      background:
-        linear-gradient(var(--ink-blue), var(--ink-blue));
-      position: relative;
-      z-index: 5;
-    }
-
-    .brand {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-    }
-
-    .brand .mark {
-      font-family: 'IBM Plex Mono', monospace;
-      font-weight: 700;
-      font-size: 20px;
-      letter-spacing: 0.08em;
-      color: var(--paper);
-    }
-
-    .brand .mark span {
-      color: var(--linework);
-    }
-
-    .brand .tagline {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      color: var(--ink-soft);
-      color: #9FC3E8;
-      letter-spacing: 0.02em;
-    }
-
-    .stamp-badge {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      color: var(--stamp);
-      border: 1px solid var(--stamp);
-      padding: 3px 8px;
-      border-radius: 2px;
-      transform: rotate(-2deg);
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    main {
-      flex: 1;
-      display: flex;
-      gap: 0;
-      min-height: 0;
-    }
-
-    @media (max-width: 880px) {
-      main {
-        flex-direction: column;
-      }
-    }
-
-    /* ---------- controls (paper panel) ---------- */
-    .controls {
-      width: 340px;
-      flex-shrink: 0;
-      background: var(--paper);
-      color: var(--ink);
-      padding: 22px 22px 32px;
-      overflow-y: auto;
-      border-right: 1px solid #00000022;
-    }
-
-    @media (max-width: 880px) {
-      .controls {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #00000022;
-      }
-    }
-
-    .field-group {
-      margin-bottom: 24px;
-    }
-
-    .field-group+.field-group {
-      padding-top: 20px;
-      border-top: 1px dashed #C9C4B4;
-    }
-
-    .field-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10.5px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--ink-soft);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 10px;
-    }
-
-    .field-label .idx {
-      color: var(--stamp-dark);
-    }
-
-    /* dropzone */
-    .dropzone {
-      border: 1.5px dashed #B9B2A0;
-      border-radius: 6px;
-      padding: 22px 14px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color .15s ease, background .15s ease;
-      background: var(--paper-dark);
-    }
-
-    .dropzone:hover,
-    .dropzone.drag {
-      border-color: var(--stamp);
-      background: #EFE2D9;
-    }
-
-    .dropzone svg {
-      margin-bottom: 8px;
-      opacity: 0.6;
-    }
-
-    .dropzone .dz-title {
-      font-weight: 600;
-      font-size: 13.5px;
-    }
-
-    .dropzone .dz-sub {
-      font-size: 11.5px;
-      color: var(--ink-soft);
-      margin-top: 4px;
-    }
-
-    .dropzone.has-image {
-      padding: 10px;
-    }
-
-    .dropzone.has-image img {
-      max-width: 100%;
-      max-height: 90px;
-      border-radius: 4px;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .dropzone .swap-label {
-      font-size: 11px;
-      color: var(--ink-soft);
-      margin-top: 6px;
-    }
-
-    input[type=file] {
-      display: none;
-    }
-
-    /* segmented control */
-    .segmented {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-    }
-
-    .seg-btn {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.02em;
-      padding: 9px 4px;
-      background: var(--paper-dark);
-      border: 1px solid #C9C4B4;
-      border-radius: 5px;
-      cursor: pointer;
-      color: var(--ink);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      transition: all .12s ease;
-    }
-
-    .seg-btn svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    .seg-btn:hover {
-      border-color: var(--ink);
-    }
-
-    .seg-btn.active {
-      background: var(--ink);
-      color: var(--paper);
-      border-color: var(--ink);
-    }
-
-    .text-input {
-      width: 100%;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12.5px;
-      padding: 9px 10px;
-      border: 1px solid #C9C4B4;
-      border-radius: 5px;
-      background: #fff;
-      color: var(--ink);
-    }
-
-    .text-input:focus,
-    .seg-btn:focus-visible,
-    .swatch:focus-visible,
-    button:focus-visible {
-      outline: 2px solid var(--stamp);
-      outline-offset: 1px;
-    }
-
-    .toggle-row {
-      display: flex;
-      gap: 6px;
-    }
-
-    .toggle-row .seg-btn {
-      flex: 1;
-    }
-
-    .swatch-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .swatch {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 2px solid rgba(0, 0, 0, 0.12);
-      cursor: pointer;
-      position: relative;
-      flex-shrink: 0;
-    }
-
-    .swatch.active::after {
-      content: "";
-      position: absolute;
-      inset: -5px;
-      border: 2px solid var(--stamp);
-      border-radius: 50%;
-    }
-
-    .swatch.transparent {
-      background-image:
-        linear-gradient(45deg, #ccc 25%, transparent 25%),
-        linear-gradient(-45deg, #ccc 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #ccc 75%),
-        linear-gradient(-45deg, transparent 75%, #ccc 75%);
-      background-size: 8px 8px;
-      background-position: 0 0, 0 4px, 4px -4px, -4px 0;
-      background-color: #fff;
-    }
-
-    .swatch.custom-color {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      overflow: hidden;
-    }
-
-    .swatch.custom-color input {
-      width: 150%;
-      height: 150%;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-    }
-
-    .slider-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .slider-row input[type=range] {
-      flex: 1;
-      accent-color: var(--stamp);
-    }
-
-    .slider-val {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11.5px;
-      width: 34px;
-      text-align: right;
-      color: var(--ink-soft);
-    }
-
-    .export-block {
-      margin-top: 6px;
-    }
-
-    .btn-primary {
-      width: 100%;
-      background: var(--stamp);
-      color: #fff;
-      border: none;
-      font-family: 'IBM Plex Mono', monospace;
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 0.03em;
-      padding: 13px;
-      border-radius: 6px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background .12s ease;
-    }
-
-    .btn-primary:hover {
-      background: var(--stamp-dark);
-    }
-
-    .btn-primary:disabled {
-      background: #C9C4B4;
-      cursor: not-allowed;
-    }
-
-    .export-scale {
-      display: flex;
-      gap: 6px;
-      margin-top: 8px;
-    }
-
-    .export-scale .seg-btn {
-      flex: 1;
-      padding: 7px 4px;
-    }
-
-    /* ---------- canvas stage (blueprint) ---------- */
-    .stage {
-      flex: 1;
-      position: relative;
-      overflow: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-      background-image:
-        linear-gradient(var(--grid-line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
-        linear-gradient(var(--grid-line-strong) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-line-strong) 1px, transparent 1px);
-      background-size: 16px 16px, 16px 16px, 80px 80px, 80px 80px;
-      background-color: var(--blueprint-bg);
-    }
-
-    .stage-inner {
-      position: relative;
-    }
-
-    .dim-label {
-      position: absolute;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      color: var(--linework);
-      letter-spacing: 0.03em;
-      white-space: nowrap;
-    }
-
-    .dim-label.top {
-      top: -26px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .dim-label.left {
-      left: -14px;
-      top: 50%;
-      transform: translateX(-100%) rotate(0deg);
-      writing-mode: vertical-rl;
-    }
-
-    .corner {
-      position: absolute;
-      width: 18px;
-      height: 18px;
-      border-color: var(--linework);
-      border-style: solid;
-      opacity: 0.85;
-    }
-
-    .corner.tl {
-      top: -10px;
-      left: -10px;
-      border-width: 2px 0 0 2px;
-    }
-
-    .corner.tr {
-      top: -10px;
-      right: -10px;
-      border-width: 2px 2px 0 0;
-    }
-
-    .corner.bl {
-      bottom: -10px;
-      left: -10px;
-      border-width: 0 0 2px 2px;
-    }
-
-    .corner.br {
-      bottom: -10px;
-      right: -10px;
-      border-width: 0 2px 2px 0;
-    }
-
-    #outputCanvas {
-      display: block;
-      max-width: 100%;
-      height: auto;
-    }
-
-    .empty-note {
-      font-family: 'IBM Plex Mono', monospace;
-      color: #9FC3E8;
-      font-size: 13px;
-      text-align: center;
-      max-width: 280px;
-      line-height: 1.6;
-    }
-
-    .empty-note b {
-      color: var(--paper);
-    }
-
-    .footnote {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10.5px;
-      color: #7FA0C4;
-      text-align: center;
-      padding: 10px;
-      border-top: 1px solid var(--grid-line-strong);
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Webnail — Mockup generator for developers</title>
+<meta name="description" content="Turn a screenshot — or a live URL — into a clean framed mockup. Pair a desktop shot with a mobile shot side by side, style it, and export a PNG. Runs entirely in your browser.">
+<meta name="theme-color" content="#0C2B4E">
+<meta property="og:title" content="Webnail — Mockup generator for developers">
+<meta property="og:description" content="Frame a screenshot or a live URL into a downloadable mockup — desktop and mobile side by side.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%230C2B4E'/%3E%3Cpath d='M4 8h16M8 4v16' stroke='%237FC1FF' stroke-width='1.4' opacity='0.6'/%3E%3Crect x='6' y='6' width='9' height='6' rx='1' fill='none' stroke='%23FF6B45' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
 
-  <div class="app">
-    <header>
-      <div class="brand">
-        <div class="mark">WEB<span>NAIL</span></div>
-        <div class="tagline">// mockups for developers</div>
+<div class="app" id="app" data-mode="single">
+  <header>
+    <div class="brand">
+      <div class="mark">WEB<span>NAIL</span></div>
+      <div class="tagline">// mockups for developers</div>
+    </div>
+    <div class="stamp-badge">v. 01</div>
+  </header>
+
+  <main>
+    <div class="controls">
+
+      <div class="field-group">
+        <div class="field-label"><span class="idx">01</span> Layout</div>
+        <div class="mode-toggle" id="modeToggle">
+          <button class="seg-btn active" data-mode-btn="single" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+            Single shot
+          </button>
+          <button class="seg-btn" data-mode-btn="pair" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="13" height="12" rx="1.5"/><rect x="17" y="4" width="6" height="16" rx="1.5"/></svg>
+            Desktop + Mobile
+          </button>
+        </div>
+        <div class="field-sub pair-only">Renders a desktop mockup on the left and a phone mockup on the right, in one exported image.</div>
       </div>
-      <div class="stamp-badge">v. 01</div>
-    </header>
 
-    <main>
-      <div class="controls">
+      <div class="field-group">
+        <div class="field-label"><span class="idx">02</span> Screenshot<span class="pair-only">s</span></div>
 
-        <div class="field-group">
-          <div class="field-label"><span class="idx">01</span> Screenshot</div>
+        <div class="single-only">
           <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload a screenshot">
             <div id="dzContent">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#10141A" stroke-width="1.6">
-                <path d="M12 3v12m0-12l-4 4m4-4l4 4" />
-                <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
-              </svg>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#10141A" stroke-width="1.6"><path d="M12 3v12m0-12l-4 4m4-4l4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
               <div class="dz-title">Drop a screenshot, click to browse, or paste</div>
-              <div class="dz-sub">PNG or JPG · your image, not a live URL capture</div>
+              <div class="dz-sub">PNG or JPG</div>
             </div>
           </div>
           <input type="file" id="fileInput" accept="image/png, image/jpeg, image/webp">
         </div>
 
-        <div class="field-group">
-          <div class="field-label"><span class="idx">02</span> Frame style</div>
-          <div class="segmented" id="frameStyle">
-            <button class="seg-btn active" data-frame="mac">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="5" width="18" height="14" rx="2" />
-                <path d="M3 9h18" />
-                <circle cx="6" cy="7" r="0.6" fill="currentColor" />
-              </svg>
-              Browser
-            </button>
-            <button class="seg-btn" data-frame="minimal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="6" width="18" height="12" rx="1.5" />
-                <path d="M3 9h18" />
-              </svg>
-              Minimal
-            </button>
-            <button class="seg-btn" data-frame="phone">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="7" y="2" width="10" height="20" rx="2" />
-                <path d="M10 19h4" />
-              </svg>
-              Phone
-            </button>
-            <button class="seg-btn" data-frame="none">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="4" width="18" height="16" rx="2" />
-              </svg>
-              Clean
-            </button>
-          </div>
-        </div>
-
-        <div class="field-group" id="urlBarGroup">
-          <div class="field-label"><span class="idx">03</span> Address bar text</div>
-          <input class="text-input" id="urlText" value="yourproject.dev" maxlength="60">
-          <div style="height:10px"></div>
-          <div class="toggle-row">
-            <button class="seg-btn active" data-chrome="light">Light chrome</button>
-            <button class="seg-btn" data-chrome="dark">Dark chrome</button>
-          </div>
-        </div>
-
-        <div class="field-group">
-          <div class="field-label"><span class="idx">04</span> Background</div>
-          <div class="swatch-row" id="bgSwatches">
-            <div class="swatch active" data-bg="grid" style="background:#0C2B4E"></div>
-            <div class="swatch" data-bg="solid-1" style="background:#EDE7DA"></div>
-            <div class="swatch" data-bg="solid-2" style="background:#1B1F27"></div>
-            <div class="swatch" data-bg="grad-1" style="background:linear-gradient(135deg,#FF9966,#FF6B45)"></div>
-            <div class="swatch" data-bg="grad-2" style="background:linear-gradient(135deg,#4FD1A5,#2E9E7C)"></div>
-            <div class="swatch" data-bg="grad-3" style="background:linear-gradient(135deg,#7FC1FF,#2E5C9E)"></div>
-            <div class="swatch transparent" data-bg="transparent" title="Transparent"></div>
-            <div class="swatch custom-color" title="Custom color">
-              <input type="color" id="customColor" value="#FF6B45">
+        <div class="pair-only">
+          <div class="dropzone-pair">
+            <div>
+              <div class="dz-caption">Desktop</div>
+              <div class="dropzone" id="dropzoneDesktop" tabindex="0" role="button" aria-label="Upload a desktop screenshot">
+                <div id="dzContentDesktop">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10141A" stroke-width="1.6"><path d="M12 3v12m0-12l-4 4m4-4l4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+                  <div class="dz-title">Drop / click</div>
+                </div>
+              </div>
+              <input type="file" id="fileInputDesktop" accept="image/png, image/jpeg, image/webp">
+            </div>
+            <div>
+              <div class="dz-caption">Mobile</div>
+              <div class="dropzone" id="dropzoneMobile" tabindex="0" role="button" aria-label="Upload a mobile screenshot">
+                <div id="dzContentMobile">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10141A" stroke-width="1.6"><path d="M12 3v12m0-12l-4 4m4-4l4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+                  <div class="dz-title">Drop / click</div>
+                </div>
+              </div>
+              <input type="file" id="fileInputMobile" accept="image/png, image/jpeg, image/webp">
             </div>
           </div>
         </div>
 
-        <div class="field-group">
-          <div class="field-label"><span class="idx">05</span> Padding</div>
-          <div class="slider-row">
-            <input type="range" id="paddingSlider" min="0" max="160" value="72">
-            <span class="slider-val" id="paddingVal">72px</span>
-          </div>
+        <div class="divider-row">or capture from a live URL</div>
+        <div class="url-capture-row">
+          <input class="text-input" id="captureUrl" type="text" inputmode="url" autocomplete="off" placeholder="example.com" aria-label="Website URL to capture">
+          <button class="btn-secondary" id="captureBtn" type="button">Capture</button>
         </div>
-
-        <div class="field-group">
-          <div class="field-label"><span class="idx">06</span> Corner radius</div>
-          <div class="slider-row">
-            <input type="range" id="radiusSlider" min="0" max="32" value="10">
-            <span class="slider-val" id="radiusVal">10px</span>
+        <details class="advanced-details">
+          <summary>Advanced: how this works</summary>
+          <div class="advanced-body">
+            <p>Capturing a real webpage needs a headless-browser service, since a browser tab can't screenshot another site's page directly. This uses <a href="https://microlink.io" target="_blank" rel="noopener noreferrer">Microlink</a>'s free screenshot API — it renders a proper desktop and mobile viewport of the page and hands back real images. Their free anonymous tier is rate-limited; if a capture fails, try again shortly, or upload a screenshot manually instead.</p>
           </div>
-        </div>
+        </details>
+        <div class="capture-status" id="captureStatus" role="status" aria-live="polite"></div>
+      </div>
 
-        <div class="field-group">
-          <div class="field-label"><span class="idx">07</span> Shadow</div>
-          <div class="slider-row">
-            <input type="range" id="shadowSlider" min="0" max="100" value="45">
-            <span class="slider-val" id="shadowVal">45%</span>
-          </div>
-        </div>
-
-        <div class="field-group export-block">
-          <div class="field-label"><span class="idx">08</span> Export</div>
-          <button class="btn-primary" id="downloadBtn" disabled>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 3v12m0 0l-4-4m4 4l4-4" />
-              <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
-            </svg>
-            Download PNG
+      <div class="field-group">
+        <div class="field-label single-only"><span class="idx">03</span> Frame style</div>
+        <div class="field-label pair-only"><span class="idx">03</span> Desktop frame style</div>
+        <div class="segmented single-only" id="frameStyle">
+          <button class="seg-btn active" data-frame="mac">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/><circle cx="6" cy="7" r="0.6" fill="currentColor"/></svg>
+            Browser
           </button>
-          <div class="export-scale">
-            <button class="seg-btn active" data-scale="1">1×</button>
-            <button class="seg-btn" data-scale="2">2×</button>
-            <button class="seg-btn" data-scale="3">3×</button>
+          <button class="seg-btn" data-frame="minimal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="12" rx="1.5"/><path d="M3 9h18"/></svg>
+            Minimal
+          </button>
+          <button class="seg-btn" data-frame="phone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M10 19h4"/></svg>
+            Phone
+          </button>
+          <button class="seg-btn" data-frame="none">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
+            Clean
+          </button>
+        </div>
+        <div class="segmented cols-3 pair-only" id="frameStylePair">
+          <button class="seg-btn active" data-frame-pair="mac">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/><circle cx="6" cy="7" r="0.6" fill="currentColor"/></svg>
+            Browser
+          </button>
+          <button class="seg-btn" data-frame-pair="minimal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="12" rx="1.5"/><path d="M3 9h18"/></svg>
+            Minimal
+          </button>
+          <button class="seg-btn" data-frame-pair="none">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
+            Clean
+          </button>
+        </div>
+        <div class="field-sub pair-only">The mobile mockup always uses a phone frame.</div>
+      </div>
+
+      <div class="field-group" id="urlBarGroup">
+        <div class="field-label"><span class="idx">04</span> Address bar text</div>
+        <input class="text-input" id="urlText" value="www.myproject.dev" maxlength="60">
+        <div style="height:10px"></div>
+        <div class="toggle-row">
+          <button class="seg-btn" data-chrome="light">Light chrome</button>
+          <button class="seg-btn active" data-chrome="dark">Dark chrome</button>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label"><span class="idx">05</span> Background</div>
+        <div class="swatch-row" id="bgSwatches">
+          <div class="swatch" data-bg="grid" style="background:#0C2B4E"></div>
+          <div class="swatch" data-bg="solid-1" style="background:#EDE7DA"></div>
+          <div class="swatch" data-bg="solid-2" style="background:#1B1F27"></div>
+          <div class="swatch" data-bg="grad-1" style="background:linear-gradient(135deg,#FF9966,#FF6B45)"></div>
+          <div class="swatch" data-bg="grad-2" style="background:linear-gradient(135deg,#4FD1A5,#2E9E7C)"></div>
+          <div class="swatch" data-bg="grad-3" style="background:linear-gradient(135deg,#7FC1FF,#2E5C9E)"></div>
+          <div class="swatch transparent" data-bg="transparent" title="Transparent"></div>
+          <div class="swatch custom-color active" title="Custom color">
+            <input type="color" id="customColor" value="#F0F0F0">
           </div>
         </div>
-
       </div>
 
-      <div class="stage" id="stage">
-        <div id="emptyNote" class="empty-note">
-          <b>No screenshot loaded.</b><br>
-          Upload one on the left — Webnail will drop it into a frame right here, drawn live on a canvas you can export
-          as PNG.
-        </div>
-        <div class="stage-inner" id="stageInner" style="display:none;">
-          <div class="corner tl"></div>
-          <div class="corner tr"></div>
-          <div class="corner bl"></div>
-          <div class="corner br"></div>
-          <div class="dim-label top" id="dimTop">0 × 0</div>
-          <canvas id="outputCanvas"></canvas>
+      <div class="field-group">
+        <div class="field-label"><span class="idx">06</span> Padding</div>
+        <div class="slider-row">
+          <input type="range" id="paddingSlider" min="0" max="160" value="160">
+          <span class="slider-val" id="paddingVal">160px</span>
         </div>
       </div>
-    </main>
 
-    <div class="footnote">Everything renders locally in your browser — nothing is uploaded anywhere.</div>
-  </div>
+      <div class="field-group pair-only">
+        <div class="field-label"><span class="idx">07</span> Pair layout</div>
+        <div class="field-sub" style="margin-bottom:6px;">Gap between the two mockups</div>
+        <div class="slider-row">
+          <input type="range" id="gapSlider" min="0" max="160" value="40">
+          <span class="slider-val" id="gapVal">40px</span>
+        </div>
+        <div class="field-sub" style="margin:14px 0 6px;">Mobile size, relative to desktop height</div>
+        <div class="slider-row">
+          <input type="range" id="mobileScaleSlider" min="40" max="100" value="100">
+          <span class="slider-val" id="mobileScaleVal">100%</span>
+        </div>
+      </div>
 
-  <script>
-    (function () {
-      const dropzone = document.getElementById('dropzone');
-      const fileInput = document.getElementById('fileInput');
-      const dzContent = document.getElementById('dzContent');
-      const canvas = document.getElementById('outputCanvas');
-      const ctx = canvas.getContext('2d');
-      const stageInner = document.getElementById('stageInner');
-      const emptyNote = document.getElementById('emptyNote');
-      const dimTop = document.getElementById('dimTop');
-      const downloadBtn = document.getElementById('downloadBtn');
-      const urlBarGroup = document.getElementById('urlBarGroup');
+      <div class="field-group">
+        <div class="field-label"><span class="idx">08</span> Corner radius</div>
+        <div class="slider-row">
+          <input type="range" id="radiusSlider" min="0" max="32" value="32">
+          <span class="slider-val" id="radiusVal">32px</span>
+        </div>
+      </div>
 
-      let img = null;
-      let state = {
-        frame: 'mac',
-        chrome: 'light',
-        url: 'yourproject.dev',
-        bg: 'grid',
-        customColor: '#FF6B45',
-        padding: 72,
-        radius: 10,
-        shadow: 45,
-        exportScale: 1
-      };
+      <div class="field-group">
+        <div class="field-label"><span class="idx">09</span> Shadow</div>
+        <div class="slider-row">
+          <input type="range" id="shadowSlider" min="0" max="100" value="100">
+          <span class="slider-val" id="shadowVal">100%</span>
+        </div>
+      </div>
 
-      // ---------- upload handling ----------
-      function loadFile(file) {
-        if (!file || !file.type.startsWith('image/')) return;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const image = new Image();
-          image.onload = () => {
-            img = image;
-            emptyNote.style.display = 'none';
-            stageInner.style.display = 'block';
-            downloadBtn.disabled = false;
-            dzContent.innerHTML = `<img src="${e.target.result}" alt="Uploaded screenshot"><div class="swap-label">Click to swap image</div>`;
-            dropzone.classList.add('has-image');
-            render();
-          };
-          image.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
+      <div class="field-group export-block">
+        <div class="field-label"><span class="idx">10</span> Export</div>
+        <button class="btn-primary" id="downloadBtn" disabled type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          Download PNG
+        </button>
+        <div class="export-scale">
+          <button class="seg-btn active" data-scale="1" type="button">1×</button>
+          <button class="seg-btn" data-scale="2" type="button">2×</button>
+          <button class="seg-btn" data-scale="3" type="button">3×</button>
+        </div>
+        <div class="export-note" id="exportNote"></div>
+      </div>
 
-      dropzone.addEventListener('click', () => fileInput.click());
-      dropzone.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
-      fileInput.addEventListener('change', (e) => loadFile(e.target.files[0]));
+    </div>
 
-      ['dragenter', 'dragover'].forEach(ev => dropzone.addEventListener(ev, (e) => {
-        e.preventDefault(); dropzone.classList.add('drag');
-      }));
-      ['dragleave', 'drop'].forEach(ev => dropzone.addEventListener(ev, (e) => {
-        e.preventDefault(); dropzone.classList.remove('drag');
-      }));
-      dropzone.addEventListener('drop', (e) => {
-        if (e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
-      });
-      window.addEventListener('paste', (e) => {
-        const items = e.clipboardData.items;
-        for (const item of items) {
-          if (item.type.startsWith('image/')) loadFile(item.getAsFile());
-        }
-      });
+    <div class="stage" id="stage">
+      <div id="emptyNote" class="empty-note">
+        <b>No screenshot loaded.</b><br>
+        <span class="single-only">Upload one on the left, or capture a live URL — Webnail frames it right here on a canvas you can export as PNG.</span>
+        <span class="pair-only">Add a desktop and a mobile screenshot on the left, or capture a URL, to build the side-by-side mockup.</span>
+      </div>
+      <div class="stage-inner" id="stageInner" style="display:none;">
+        <div class="corner tl"></div><div class="corner tr"></div>
+        <div class="corner bl"></div><div class="corner br"></div>
+        <div class="dim-label top" id="dimTop">0 × 0</div>
+        <canvas id="outputCanvas"></canvas>
+      </div>
+    </div>
+  </main>
 
-      // ---------- controls ----------
-      document.getElementById('frameStyle').addEventListener('click', (e) => {
-        const btn = e.target.closest('.seg-btn');
-        if (!btn) return;
-        document.querySelectorAll('#frameStyle .seg-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        state.frame = btn.dataset.frame;
-        urlBarGroup.style.display = (state.frame === 'phone' || state.frame === 'none') ? 'none' : 'block';
-        render();
-      });
+  <div class="footnote">Frames and exports render locally in your browser. URL capture calls Microlink's screenshot API to fetch the image.</div>
+</div>
 
-      document.querySelectorAll('[data-chrome]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('[data-chrome]').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          state.chrome = btn.dataset.chrome;
-          render();
-        });
-      });
-
-      document.getElementById('urlText').addEventListener('input', (e) => {
-        state.url = e.target.value || ' ';
-        render();
-      });
-
-      document.getElementById('bgSwatches').addEventListener('click', (e) => {
-        const sw = e.target.closest('.swatch');
-        if (!sw) return;
-        document.querySelectorAll('#bgSwatches .swatch').forEach(s => s.classList.remove('active'));
-        sw.classList.add('active');
-        state.bg = sw.dataset.bg;
-        render();
-      });
-      document.getElementById('customColor').addEventListener('input', (e) => {
-        state.customColor = e.target.value;
-        document.querySelectorAll('#bgSwatches .swatch').forEach(s => s.classList.remove('active'));
-        e.target.closest('.swatch').classList.add('active');
-        state.bg = 'custom';
-        render();
-      });
-
-      function bindSlider(id, key, suffix) {
-        const el = document.getElementById(id);
-        const valEl = document.getElementById(key + 'Val');
-        el.addEventListener('input', () => {
-          state[key] = Number(el.value);
-          valEl.textContent = el.value + suffix;
-          render();
-        });
-      }
-      bindSlider('paddingSlider', 'padding', 'px');
-      bindSlider('radiusSlider', 'radius', 'px');
-      bindSlider('shadowSlider', 'shadow', '%');
-
-      document.querySelectorAll('.export-scale .seg-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.export-scale .seg-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          state.exportScale = Number(btn.dataset.scale);
-        });
-      });
-
-      downloadBtn.addEventListener('click', () => {
-        if (!img) return;
-        const exportCanvas = document.createElement('canvas');
-        draw(exportCanvas, state.exportScale);
-        const link = document.createElement('a');
-        link.download = 'Webnail-mockup.png';
-        link.href = exportCanvas.toDataURL('image/png');
-        link.click();
-      });
-
-      // ---------- drawing ----------
-      function roundRectPath(c, x, y, w, h, r) {
-        r = Math.min(r, w / 2, h / 2);
-        c.beginPath();
-        c.moveTo(x + r, y);
-        c.arcTo(x + w, y, x + w, y + h, r);
-        c.arcTo(x + w, y + h, x, y + h, r);
-        c.arcTo(x, y + h, x, y, r);
-        c.arcTo(x, y, x + w, y, r);
-        c.closePath();
-      }
-
-      function paintBackground(c, w, h) {
-        if (state.bg === 'transparent') return; // leave alpha
-        if (state.bg === 'grid') {
-          c.fillStyle = '#0C2B4E';
-          c.fillRect(0, 0, w, h);
-          c.strokeStyle = 'rgba(133,196,255,0.14)';
-          c.lineWidth = 1;
-          for (let gx = 0; gx < w; gx += 16) { c.beginPath(); c.moveTo(gx, 0); c.lineTo(gx, h); c.stroke(); }
-          for (let gy = 0; gy < h; gy += 16) { c.beginPath(); c.moveTo(0, gy); c.lineTo(w, gy); c.stroke(); }
-          return;
-        }
-        if (state.bg === 'solid-1') { c.fillStyle = '#EDE7DA'; c.fillRect(0, 0, w, h); return; }
-        if (state.bg === 'solid-2') { c.fillStyle = '#1B1F27'; c.fillRect(0, 0, w, h); return; }
-        if (state.bg === 'custom') { c.fillStyle = state.customColor; c.fillRect(0, 0, w, h); return; }
-        const grads = {
-          'grad-1': ['#FF9966', '#FF6B45'],
-          'grad-2': ['#4FD1A5', '#2E9E7C'],
-          'grad-3': ['#7FC1FF', '#2E5C9E']
-        };
-        if (grads[state.bg]) {
-          const g = c.createLinearGradient(0, 0, w, h);
-          g.addColorStop(0, grads[state.bg][0]);
-          g.addColorStop(1, grads[state.bg][1]);
-          c.fillStyle = g;
-          c.fillRect(0, 0, w, h);
-        }
-      }
-
-      function draw(targetCanvas, scaleMultiplier) {
-        if (!img) return;
-        const shotW = img.naturalWidth;
-        const shotH = img.naturalHeight;
-        const chromeH = state.frame === 'mac' ? Math.round(shotW * 0.052) :
-          state.frame === 'minimal' ? Math.round(shotW * 0.028) : 0;
-
-        let frameW, frameH, bezel = 0, notchH = 0;
-        if (state.frame === 'phone') {
-          bezel = Math.round(shotW * 0.045);
-          notchH = Math.round(shotW * 0.05);
-          frameW = shotW + bezel * 2;
-          frameH = shotH + bezel * 2 + notchH;
-        } else {
-          frameW = shotW;
-          frameH = shotH + chromeH;
-        }
-
-        const pad = state.padding * (frameW / 900 > 1 ? frameW / 900 : 1); // scale padding relative to image size a bit
-        const canvasW = Math.round(frameW + pad * 2);
-        const canvasH = Math.round(frameH + pad * 2);
-
-        const dpr = scaleMultiplier || 1;
-        targetCanvas.width = canvasW * dpr;
-        targetCanvas.height = canvasH * dpr;
-        const c = targetCanvas.getContext('2d');
-        c.scale(dpr, dpr);
-        c.clearRect(0, 0, canvasW, canvasH);
-
-        paintBackground(c, canvasW, canvasH);
-
-        const fx = pad, fy = pad;
-        const radius = state.radius;
-
-        // shadow pass
-        c.save();
-        if (state.shadow > 0) {
-          c.shadowColor = 'rgba(0,0,0,' + (state.shadow / 100 * 0.55).toFixed(2) + ')';
-          c.shadowBlur = state.shadow / 100 * 60;
-          c.shadowOffsetY = state.shadow / 100 * 26;
-        }
-        c.fillStyle = state.chrome === 'dark' ? '#1E2228' : '#ffffff';
-        roundRectPath(c, fx, fy, frameW, frameH, radius);
-        c.fill();
-        c.restore();
-
-        if (state.frame === 'phone') {
-          // bezel
-          c.fillStyle = '#111318';
-          roundRectPath(c, fx, fy, frameW, frameH, radius + bezel * 0.4);
-          c.fill();
-          // screen area
-          const sx = fx + bezel, sy = fy + bezel + notchH, sw = shotW, sh = shotH;
-          c.save();
-          roundRectPath(c, sx, sy, sw, sh, Math.max(radius - 6, 4));
-          c.clip();
-          c.drawImage(img, sx, sy, sw, sh);
-          c.restore();
-          // notch
-          c.fillStyle = '#111318';
-          const notchW = shotW * 0.32;
-          roundRectPath(c, fx + frameW / 2 - notchW / 2, fy + bezel * 0.35, notchW, notchH * 0.6, notchH * 0.3);
-          c.fill();
-          // home indicator
-          c.fillStyle = 'rgba(255,255,255,0.6)';
-          const barW = shotW * 0.28;
-          roundRectPath(c, fx + frameW / 2 - barW / 2, fy + frameH - bezel * 0.55, barW, 5, 3);
-          c.fill();
-        } else {
-          // clip whole frame for rounded corners
-          c.save();
-          roundRectPath(c, fx, fy, frameW, frameH, radius);
-          c.clip();
-
-          if (chromeH > 0) {
-            c.fillStyle = state.chrome === 'dark' ? '#22262E' : '#F0F0F0';
-            c.fillRect(fx, fy, frameW, chromeH);
-
-            if (state.frame === 'mac') {
-              const dotR = chromeH * 0.16, dotY = fy + chromeH / 2;
-              const colors = ['#FF5F57', '#FEBC2E', '#28C840'];
-              colors.forEach((col, i) => {
-                c.fillStyle = col;
-                c.beginPath();
-                c.arc(fx + chromeH * 0.55 + i * chromeH * 0.42, dotY, dotR, 0, Math.PI * 2);
-                c.fill();
-              });
-              // address pill
-              const pillX = fx + chromeH * 2.1;
-              const pillW = frameW - chromeH * 2.1 - chromeH * 0.7;
-              const pillH = chromeH * 0.5;
-              c.fillStyle = state.chrome === 'dark' ? '#33383F' : '#FFFFFF';
-              roundRectPath(c, pillX, dotY - pillH / 2, pillW, pillH, pillH / 2);
-              c.fill();
-              c.fillStyle = state.chrome === 'dark' ? '#B8BEC6' : '#5B6570';
-              c.font = Math.round(chromeH * 0.32) + 'px "IBM Plex Mono", monospace';
-              c.textBaseline = 'middle';
-              c.fillText('🔒 ' + state.url, pillX + pillH * 0.6, dotY + 1);
-            } else {
-              // minimal: thin line only, tiny dot
-              c.fillStyle = state.chrome === 'dark' ? '#9AA3AD' : '#8A929B';
-              c.beginPath();
-              c.arc(fx + chromeH * 0.6, fy + chromeH / 2, chromeH * 0.12, 0, Math.PI * 2);
-              c.fill();
-              c.font = Math.round(chromeH * 0.34) + 'px "IBM Plex Mono", monospace';
-              c.textBaseline = 'middle';
-              c.fillText(state.url, fx + chromeH * 1.3, fy + chromeH / 2 + 1);
-            }
-          }
-          c.drawImage(img, fx, fy + chromeH, shotW, shotH);
-          c.restore();
-        }
-
-        return { w: canvasW, h: canvasH };
-      }
-
-      function render() {
-        if (!img) return;
-        const dims = draw(canvas, 1);
-        canvas.style.width = Math.min(dims.w, 760) + 'px';
-        canvas.style.height = 'auto';
-        dimTop.textContent = dims.w + ' × ' + dims.h;
-      }
-
-      window.addEventListener('resize', render);
-    })();
-  </script>
+<script src="js/scripts.js" type="module"></script>
 </body>
-
 </html>
